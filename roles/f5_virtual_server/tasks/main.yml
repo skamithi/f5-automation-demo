@@ -1,0 +1,51 @@
+---
+- name: create monitor
+  bigip_monitor_http:
+    state: present
+    server: "{{ f5_hostname }}"
+    user: "{{ f5_user }}"
+    password: "{{ f5_password }}"
+    send: "{{ monitor_send_string }}"
+    receive: "{{ monitor_receive_string }}"
+
+- name: create nodes
+  bigip_node:
+    server: "{{ f5_hostname }}"
+    user: "{{ f5_user }}"
+    password: "{{ f5_password }}"
+    host: "{{ item }}"
+    name: "{{ item }}"
+  with_items: "{{ pool_members }}"
+
+- name: create pool
+  bigip_pool:
+    server: "{{ f5_hostname }}"
+    user: "{{ f5_user }}"
+    password: "{{ f5_password }}"
+    name: "{{ pool_name }}"
+    partition: "Common"
+    lb_method: "{{ lb_method }}"
+
+- name: add pool member
+  bigip_pool:
+    server: "{{ f5_hostname }}"
+    user: "{{ f5_user }}"
+    password: "{{ f5_password }}"
+    host: "{{ item }}"
+  with_items: "{{ pool_members }}"
+
+# TODO: Automate SSL Profiles and Irules
+
+- name: create virtual server
+  bigip_virtual_server:
+    server: "{{ f5_hostname }}"
+    user: "{{ f5_user }}"
+    password: "{{ f5_password }}"
+    partition: "Common"
+    destination: "{{ vip_address }}"
+    port: "{{ vip_port }}"
+    snat: "{{ pool_members | are_pool_members_behind_f5() }}"
+    description: "{{ virtual_server_name }}"
+    all_profiles: "{{ vip_profiles }}"
+    default_persistence_profile: "{{ vip_default_persistent_profile | default(omit) }}"
+    fallback_persistent_profile: "{{ vip_fallback_persistent_profile | default(omit) }}"

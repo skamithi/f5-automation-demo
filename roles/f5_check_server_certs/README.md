@@ -25,6 +25,9 @@ Role Variables
 * ``mail_receipient``: mail destination email
 * ``mail_sender``: mail sender email
 
+You may want to place all the mail options in an [Ansible Vault](https://docs.ansible.com/ansible/2.4/vault.html) in ``group_vars/all/vars.yml`` file if the
+mail options are static.
+
 Dependencies
 ------------
 

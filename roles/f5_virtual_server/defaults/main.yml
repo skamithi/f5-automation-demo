@@ -1,0 +1,13 @@
+# Default setting for the pool loadbalancing will be round robin.
+lb_method: round_robin
+# monitor_send_string: http string to send to the node behind the f5
+# monitor_receive_string: http string to expect from the node behind the f5
+# pool_members: List of hostnames that will become pool members
+# pool_name: F5 pool name
+
+# vserver_address:  vserver address
+# vserver_port: vserver port
+# vserver_name: vserver name
+# vserver_profiles: list virtual server profiles. Example: ['http', 'clientssl']
+# vserver_default_persistent_profile: Define default persistence profile
+# vserver_fallback_persistent_profile: Define fallack persistence profile
