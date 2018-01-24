@@ -10,6 +10,8 @@ Workflows are:
 
 See the various playbooks in the [playbooks](./playbooks) directory for more details.
 
+> Note:
+  playbooks not tested yet on F5. May have bugs.
 
 ## License
 MIT
