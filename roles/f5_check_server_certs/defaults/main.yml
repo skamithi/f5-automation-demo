@@ -7,3 +7,4 @@ f5_cert_expiration_period: 10
 # mail_username: myawesomename
 # mail_password: mystrongpassword
 # mail_receipient: "dest@destcompany.com"
+# mail_sender: "me@mycompany.com"

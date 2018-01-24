@@ -21,6 +21,7 @@
     username: "{{ mail_username }}"
     password: "{{ mail_password }}"
     to: "{{ mail_receipient }}"
+    from: "{{ mail_sender }}"
     subject: "F5 Certificates Expiring - Period: {{ f5_cert_expiration_period }}"
     body: "{{ cert_report }}"
     charset: "utf8"

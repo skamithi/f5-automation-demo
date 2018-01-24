@@ -1,7 +1,7 @@
 f5_check_server_certs
 ==============
 
-Checks if any certificates are expiring.
+Checks if any certificates are expiring within a particular expiration period. The role produces a report which is then emailed to an admin.
 
 Requirements
 ------------
@@ -18,6 +18,12 @@ Role Variables
 * ``f5_hostname``: f5 server name
 * ``f5_username``: f5 username with privileges to add or remove pool members
 * ``f5_password``: f5 password for user with add/remove pool member privileges
+* ``mailserver``: mail server name
+* ``mail_port``: mail server port
+* ``mail_username``: mail server user name
+* ``mail_password``: mail server user password
+* ``mail_receipient``: mail destination email
+* ``mail_sender``: mail sender email
 
 Dependencies
 ------------
