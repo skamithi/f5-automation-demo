@@ -1,0 +1,9 @@
+---
+# defaults file for f5_pool_member
+pool_action: 'add'
+
+#pool_name: [ Name of the F5 pool]
+#pool_member : [IP or hostname of pool member to add or remove]
+#f5_hostname: [f5 server name]
+#f5_username: [f5 username with privileges to add or remove pool members]
+#f5_password: [f5 password for user with add/remove pool member privileges]

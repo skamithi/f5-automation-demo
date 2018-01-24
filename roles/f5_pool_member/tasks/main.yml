@@ -1,0 +1,43 @@
+---
+# Pseudo code
+# check if pool_action is either "add" or "delete"
+# transform pool_action to be "present" if add or "absent"
+# add the new pool members
+# TODO: give capability add multiple pool members.
+- debug:
+    msg: "ACTION: {{ pool_member }} will be {{ pool_action}}ed to {{ pool_name }}"
+
+- name: check that action is add or delete
+  assert:
+    msg: "pool action must be 'add' or 'delete'"
+    that:
+      - "pool_action == 'add' || pool_action == 'delete'"
+
+- name: transform  pool action to say 'present' or 'absent'
+  set_fact:
+    action: present
+  when: pool_action == 'add'
+
+- name: transform pool action to say present or absent
+  set_fact:
+    action: absent
+  when: pool_action = 'delete'
+
+- name: create the pool member (if it is not yet created)
+  bigip_node:
+    server: "{{ f5_hostname }}"
+    user: "{{ f5_username }}"
+    password: "{{ f5_password }}"
+    state: present
+    host: "{{ pool_member }}"
+    name: "{{ pool_member }}"
+
+- name: add or remove pool member
+  bigip_pool:
+    server: "{{ f5_hostname }}"
+    user: "{{ f5_username }}"
+    password: "{{ f5_password }}"
+    state: "{{ action }}"
+    name: "{{ pool_name }}"
+    partition: "Common"
+    host: "{{ pool_member }}"

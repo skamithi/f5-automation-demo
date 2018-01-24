@@ -1,0 +1,26 @@
+---
+- name: get bigip_facts to get cert info
+  bigip_facts:
+    server: "{{ f5_hostname }}"
+    user: "{{ f5_username }}"
+    password: "{{ f5_password }}"
+    include: "certificate"
+
+- name: get the current date and time for calculating which certs match the expiration period
+  setup:
+    filter: ansible_date_time
+
+- name: use a lookup template to produce a report of certs that are about to expire
+  set_facts:
+    cert_report: "{{ lookup('template', 'generate_report.j2') }}"
+
+- name: mail the report
+  mail:
+    host: "{{ mailserver }}"
+    port: "{{ mail_port }}"
+    username: "{{ mail_username }}"
+    password: "{{ mail_password }}"
+    to: "{{ mail_receipient }}"
+    subject: "F5 Certificates Expiring - Period: {{ f5_cert_expiration_period }}"
+    body: "{{ cert_report }}"
+    charset: "utf8"

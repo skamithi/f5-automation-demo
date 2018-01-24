@@ -1,0 +1,23 @@
+{#
+ for each certificate in the certificate list
+     time_diff =  cert expiration date -  current date
+     if time_diff < expiration period
+         print out cert name, expiration date
+     endif
+ endfor
+ // the report can be wrapped in a pretty HTML :)
+ for each cert in expiring cert list
+    print "name of the cert" and "expiration date"
+ endif
+
+#}
+
+List of Expiring Certificates  - Expiration Period {{ f5_cert_expiration_period }} days
+---------------------------------------------------------------------------------------
+{% for certname, certdetails in certificate.iteritems() %}
+{%- set time_diff_days = ((cert.expiration_date - ansible_date_time.epoch)/86400) | abs) -%}
+{% if time_diff_days <= f5_cert_expiration_period %}
+  **  Certificate Name: {{ certname }}  Expiration Date: {{ certdetails.expiration_string }}
+
+{% endif %}
+{% endfor %}

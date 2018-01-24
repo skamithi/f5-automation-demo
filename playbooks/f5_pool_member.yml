@@ -1,0 +1,18 @@
+---
+- hosts: all
+  connection: local
+  pre_tasks:
+    - assert:
+        that: pool_member is defined
+        msg: "pool_member is not entered. this is a required extra variable"
+
+    - assert:
+        that: pool_name is defined
+        msg: "pool_name is not entered. this is a required extra variable"
+
+  vars:
+    f5_hostname: "{{ inventory_hostname }}"
+    f5_username: "{{ ansible_user }}"
+    f5_password: "{{ ansible_password }}"
+  roles:
+    - role: f5_pool_member

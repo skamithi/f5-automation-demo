@@ -1,0 +1,9 @@
+# f5_cert_expiration_period defaults to 10 days
+f5_cert_expiration_period: 10
+
+# mail options
+# mailserver: smtp.myserver.local
+# mail_port: 597
+# mail_username: myawesomename
+# mail_password: mystrongpassword
+# mail_receipient: "dest@destcompany.com"

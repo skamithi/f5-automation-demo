@@ -1,0 +1,9 @@
+---
+- hosts: all
+  connection: local
+  vars:
+    f5_hostname: "{{ inventory_hostname }}"
+    f5_username: "{{ ansible_user }}"
+    f5_password: "{{ ansible_password }}"
+  roles:
+    - role: f5_check_certs
