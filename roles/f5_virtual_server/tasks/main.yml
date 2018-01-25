@@ -36,6 +36,13 @@
 
 # TODO: Automate SSL Profiles and Irules
 
+- name: get self_ip bigip set_fact
+  bigip_facts:
+    server: "{{ f5_hostname }}"
+    user: "{{ f5_user }}"
+    password: "{{ f5_password }}"
+    include: "self_ip"
+
 - name: create virtual server
   bigip_virtual_server:
     server: "{{ f5_hostname }}"
@@ -44,7 +51,7 @@
     partition: "Common"
     destination: "{{ vip_address }}"
     port: "{{ vip_port }}"
-    snat: "{{ pool_members | are_pool_members_behind_f5() }}"
+    snat: "{{ self_ip | enable_snat(pool_members) }}"
     description: "{{ virtual_server_name }}"
     all_profiles: "{{ vip_profiles }}"
     default_persistence_profile: "{{ vip_default_persistent_profile | default(omit) }}"
